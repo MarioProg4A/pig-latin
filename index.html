@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pig Latin Translator</title>
+  <style>
+    body {
+      font-family: 'Balsamiq Sans', cursive;
+      background-color: #DC6F02;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: #221B1A;
+      font-size: 48px;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 80%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    label {
+      font-size: 18px;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #showTranslation {
+      font-size: 28px;
+      margin-top: 20px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Pig Latin Translator</h1>
+  </header>
+  <div class="container">
+    <label for="wordInput">Put in one or more words</label>
+    <input id="wordInput" name="wordInput" type="text">
+    <button onclick="translatePigLatin()" type="button" id="translate-pl">PIG OUT</button>
+    <div id="showTranslation"></div>
+  </div>
+  <script>
+    const translatePigLatin = () => {
+      let oldword = document.getElementById("wordInput").value;
+      if (oldword.match(/ /)) {
+        oldword = oldword.toLowerCase().trim();
+        let wordArr = oldword.split(' ');
+        let result = '';
+        for (let i = 0; i < wordArr.length; i++) {
+          if (i > 0) {
+            result += ' ';
+          }
+          result += translate(wordArr[i]);
+        }
+        document.getElementById("showTranslation").innerHTML = result;
+        return result;
+      }
+      let result = translate(oldword);
+      document.getElementById("showTranslation").innerHTML = result;
+      return result;
+    }
+
+    const translate = (oldword) => {
+      const vowels = ["a", "e", "i", "o", "u"];
+      let newWord = "";
+      if (vowels.indexOf(oldword[0]) > -1) {
+        newWord = oldword + "yay";
+        return newWord;
+      } else {
+        let firstVowelIndex = oldword.search(/[aeiou]/);
+        if (firstVowelIndex === -1) {
+          newWord = oldword + "ay";
+        } else {
+          newWord = oldword.substring(firstVowelIndex) + oldword.substring(0, firstVowelIndex) + "ay";
+        }
+        return newWord;
+      }
+    }
+  </script>
+</body>
+</html>
